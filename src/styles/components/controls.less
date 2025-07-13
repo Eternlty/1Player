@@ -1,0 +1,94 @@
+.controls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin-top: auto;
+
+  button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 10px;
+
+    &:hover {
+      color: #1db954;
+    }
+  }
+
+  .landscape-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.3em;
+    cursor: pointer;
+    padding: 0 10px;
+    order: 3;
+  }
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .slider-icon {
+    font-size: 1.2em;
+    opacity: 0.8;
+  }
+
+  .time-display, .volume-display {
+    font-size: 0.9em;
+    min-width: 80px;
+    text-align: center;
+    opacity: 0.8;
+  }
+}
+
+.progress-slider {
+  width: 200px;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 6px;
+  background: linear-gradient(90deg, #fff 0%, #fff var(--progress, 0%), rgba(255,255,255,0.3) var(--progress, 0%), rgba(255,255,255,0.3) 100%);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.volume-slider {
+  width: 100px;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 6px;
+  background: linear-gradient(90deg, #1db954 0%, #1db954 var(--volume, 0%), rgba(255,255,255,0.3) var(--volume, 0%), rgba(255,255,255,0.3) 100%);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.controls input[type="range"] {
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  &:active {
+    transform: scale(1.02);
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+}

@@ -1,7 +1,7 @@
 <template>
   <!-- 保持原有模板不变 -->
     <div class="player-container" :class="{ landscape: isLandscape }">
-    <div class="background" :style="{ backgroundImage: 'url(' + (currentSong.cover || '/img/background.jpg') + ')' }"></div>
+    <div class="background" :style="{ backgroundImage: 'url(' + (currentSong.cover || 'background.jpg') + ')' }"></div>
     <div class="glass-overlay"></div>
     <div class="main-content">
       <div class="content-wrapper">
@@ -147,7 +147,7 @@ export default {
     onTimeUpdate(e) {
       this.currentTime = e.target.currentTime;
       for (let i = 0; i < this.lyrics.length; i++) {
-        if (this.currentTime * 1000 + 25 < this.lyrics[i].time) {  // 提前20毫秒切换
+        if (this.currentTime * 1000 + 280 < this.lyrics[i].time) {  // 提前280毫秒切换
           this.currentLyricIndex = i - 1 >= 0 ? i - 1 : 0;
           // 自动滚动到当前歌词
           this.$nextTick(() => {
@@ -292,94 +292,22 @@ export default {
 };
 </script>
 
-<style scoped>
-.player-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  color: #fff;
-  font-family: 'Segoe UI', 'PingFang SC', 'Arial', sans-serif;
-}
+<style scoped lang="less">
+@import '../styles/base.less';
+@import '../styles/components/background.less';
+@import '../styles/components/controls.less';
+@import '../styles/components/song-list.less';
+@import '../styles/components/cover.less';
+@import '../styles/responsive.less';
 
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.5) grayscale(0.3);
-  z-index: -1;
-  transition: background-image 0.5s ease;
-}
-
-.glass-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  z-index: -1;
-}
-
-.main-content {
-  height: 100%;
-  padding: 0;
-}
-
-.content-wrapper {
-  display: flex;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-  border-radius: 0;
-  padding: 0;
-}
-
-.player-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-.cover-info {
-  position: relative;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.controls .landscape-btn {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 1.3em;
-  cursor: pointer;
-  padding: 0 10px;
-  order: 3;
-}
-
-.cover {
-  width: 200px;
-  height: 200px;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-}
-
+/* 以下是保留的原有样式,移除后可能会导致小封面不显示 */
 .lyric-box {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
   text-align: center;
-  font-size: 1.17em; /* 减小10% */
-  line-height: 1.6;
+  font-size: 1.17em;
+  line-height: 1.5;
   width: 90%;
   max-width: 400px;
   margin: 0 auto;
@@ -388,142 +316,13 @@ export default {
 }
 
 .lyric-box::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 .lyric-box .active {
   color: #1db954;
   font-weight: bold;
-  font-size: 1.3em;
-}
-
-.no-music {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  font-size: 1.5em;
-  color: rgba(255,255,255,0.7);
-}
-
-    .song-list {
-      flex: 0 0 350px;  /* 增加宽度 */
-      padding: 20px;
-      overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-.song-list::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
-.song-list table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.song-list th, .song-list td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.song-list tr {
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.song-list tr.selected {
-  background: rgba(29, 185, 84, 0.2);
-  color: #1db954;
-  font-weight: bold;
-}
-
-.song-list tr:hover {
-  background: rgba(255,255,255,0.2);
-}
-
-.song-list th {
-  font-weight: bold;
-  color: rgba(255,255,255,0.8);
-}
-
-.controls {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  padding: 20px 0;
-  margin-top: auto;
-}
-
-.slider-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.slider-icon {
   font-size: 1.2em;
-  opacity: 0.8;
-}
-
-.time-display, .volume-display {
-  font-size: 0.9em;
-  min-width: 80px;
-  text-align: center;
-  opacity: 0.8;
-}
-
-.controls button {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 1.5em;
-  cursor: pointer;
-  transition: color 0.2s;
-  padding: 10px;
-}
-
-.controls button:hover {
-  color: #1db954;
-}
-
-.progress-slider {
-  width: 200px;
-  appearance: none;
-  -webkit-appearance: none;
-  height: 6px;
-  background: linear-gradient(90deg, #fff 0%, #fff var(--progress, 0%), rgba(255,255,255,0.3) var(--progress, 0%), rgba(255,255,255,0.3) 100%);
-  border-radius: 3px;
-  outline: none;
-  cursor: pointer;
-}
-
-.volume-slider {
-  width: 100px;
-  appearance: none;
-  -webkit-appearance: none;
-  height: 6px;
-  background: linear-gradient(90deg, #1db954 0%, #1db954 var(--volume, 0%), rgba(255,255,255,0.3) var(--volume, 0%), rgba(255,255,255,0.3) 100%);
-  border-radius: 3px;
-  outline: none;
-  cursor: pointer;
-}
-
-.controls input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  background: #fff;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.controls input[type="range"]:active {
-  transform: scale(1.02);
 }
 
 .shortcut-notice {
@@ -566,137 +365,4 @@ export default {
   margin-top: 15px;
   cursor: pointer;
 }
-
-@media (max-width: 800px) {
-    .player-container.landscape {
-      transform: rotate(90deg);
-      transform-origin: left top;
-      width: 100vh;
-      height: 100vw;
-      position: fixed;
-      top: 0;
-      left: 100vw;
-    }
-
-    .player-container.landscape .content-wrapper {
-      flex-direction: row;
-    }
-
-    .player-container.landscape .song-list {
-      flex: 0 0 45%;  /* 增加宽度 */
-      height: 100vh;
-    }
-
-    .player-container.landscape .player-area {
-      flex: 0 0 60%;
-      height: 100vh;
-    }
-
-    .player-container.landscape {
-      font-size: 0.85em;
-    }
-    .player-container.landscape .lyric-box {
-      height: 240px; /* 固定高度 */
-      width: 100%;
-      font-size: 0.9em;
-      margin-bottom: 20px;
-      overflow-y: auto;
-    }
-    .player-container.landscape .player-area {
-      padding-bottom: 80px; /* 为控制条留出空间 */
-    }
-    .player-container.landscape .controls {
-      flex-direction: row;
-      gap: 20px;
-      padding: 15px 0;
-    }
-    .player-container.landscape .button-group {
-      order: 2;
-    }
-    .player-container.landscape .slider-container {
-      order: 1;
-    }
-    .player-container.landscape .progress-slider {
-      width: 200px;
-    }
-    .player-container.landscape .volume-slider {
-      width: 50px;
-    }
-    .player-container.landscape .song-list {
-      font-size: 0.9em;
-    }
-    .player-container.landscape .controls button {
-      font-size: 1.3em;
-    }
-    .player-container.landscape .time-display,
-    .player-container.landscape .volume-display {
-      font-size: 0.8em;
-    }
-    .player-container.landscape .cover {
-      width: 150px;
-      height: 150px;
-    }
-    .content-wrapper {
-      flex-direction: column;
-    }
-    
-    .song-list {
-      flex: 0 0 250px;
-      margin-bottom: 10px;
-      overflow-y: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .song-list::-webkit-scrollbar {
-      display: none;
-    }
-    
-    .player-area {
-      padding: 10px;
-      text-align: center;
-    }
-    
-    .cover {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto;
-    }
-    
-    .lyric-box {
-      font-size: 1em;
-      line-height: 1.8;
-      max-height: 150px;
-      overflow: hidden;
-      margin: 10px auto;
-      text-align: center;
-      width: 90%;
-    }
-    
-    .lyric-box .active {
-      font-size: 1.1em;
-    }
-    
-    .controls {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 10px;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: transparent;
-      z-index: 10;
-    }
-
-    .button-group {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-    
-    .controls input[type="range"] {
-      width: 100%;
-    }
-  }
 </style>

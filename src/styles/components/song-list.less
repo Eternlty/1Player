@@ -1,0 +1,42 @@
+.song-list {
+  flex: 0 0 350px;
+  padding: 20px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  tr {
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &.selected {
+      background: rgba(29, 185, 84, 0.2);
+      color: #1db954;
+      font-weight: bold;
+    }
+
+    &:hover {
+      background: rgba(255,255,255,0.2);
+    }
+  }
+
+  th {
+    font-weight: bold;
+    color: rgba(255,255,255,0.8);
+  }
+}
